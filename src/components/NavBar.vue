@@ -1,3 +1,17 @@
+<script>
+export default {
+  data() {
+    return {
+      isNavbarOpen: false,
+    };
+  },
+  methods: {
+    toggleNavbar() {
+      this.isNavbarOpen = !this.isNavbarOpen;
+    },
+  },
+};
+</script>
 <template>
     <header>
       <div class="w-full mx-auto bg-white">
@@ -33,22 +47,5 @@
     </header>
   </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        isNavbarOpen: false,
-      };
-    },
-    methods: {
-      toggleNavbar() {
-        this.isNavbarOpen = !this.isNavbarOpen;
-      },
-    },
-  };
-  </script>
-  
-  <style>
-  /* Add your styles here if any */
-  </style>
+ 
   

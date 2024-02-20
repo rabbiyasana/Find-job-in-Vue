@@ -1,3 +1,84 @@
+<script>
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import '../../src/index.css';
+
+export default {
+  name: 'FindJob',
+  props: {
+    head: String,
+  },
+  setup() {
+    const jobs = ref([]);
+    const empType = ref([]);
+    const expLevel = ref([]);
+    const router = useRouter();
+    const salaryRange = ref([
+      'Less than 40K Rs',
+      '40K Rs - 60K Rs',
+      '60K Rs - 100K Rs',
+      '100K Rs - 500K Rs',
+      '500K+ Rs',
+      'Custom',
+    ]);
+
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get('http://51.20.72.242/api/v1/jobs/?');
+        jobs.value = response.data.data.results;
+      } catch (error) {
+        console.error("There was an error fetching the jobs: ", error);
+      }
+    };
+
+    const fetchEmplType = async () => {
+      try {
+        const response = await axios.get("http://51.20.72.242/api/v1/jobs/employment-types/");
+        empType.value = response.data.data;
+      } catch (error) {
+        console.error("There was an error fetching the employment types: ", error);
+      }
+    };
+
+    const fetchExpLevel = async () => {
+      try {
+        const response = await axios.get("http://51.20.72.242/api/v1/jobs/career-levels/");
+        expLevel.value = response.data.data;
+      } catch (error) {
+        console.error("There was an error fetching the career levels: ", error);
+      }
+    };
+
+    const gotoJobDetails = (jobId) => {
+      router.push({ name: 'JobDetails', params: { id: jobId } });
+    };
+
+    onMounted(() => {
+      fetchJobs();
+      fetchEmplType();
+      fetchExpLevel();
+    });
+
+    const uniqueCategories = computed(() => {
+      const allCategories = jobs.value.flatMap(job => job.categories);
+      return Array.from(new Set(allCategories.map(category => category.id)))
+        .map(categoryId => allCategories.find(category => category.id === categoryId))
+        .slice(0, 6);
+    });
+
+    return {
+      jobs,
+      empType,
+      expLevel,
+      salaryRange,
+      gotoJobDetails,
+      uniqueCategories,
+    };
+  },
+};
+</script>
+
 <template>
    <div class="w-full bg-blue-100 p-5 flex justify-around items-stretch content-between">
 	<div class="container w-80vw ">
@@ -102,7 +183,6 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- The job listing part -->
 			<div class="m-2 w-full lg:w-9/12">
 				<div class=" mt-4 mt-lg-0">
@@ -159,7 +239,9 @@
                                     <strong>{{job.organization_name}}</strong>
                                 </a>
                             </div>
-                            <div class="lg:w-2/12 sm:w-full mt-4 lg:mt-0s"><router-link :to="'/job/' + job.id" class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2  my-4">Apply</router-link ></div>
+                            <div class="lg:w-2/12 sm:w-full mt-4 lg:mt-0s">
+                                <a :href="'/jobdetails/' + job.id" class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2 my-4">Apply</a>                             
+                           </div>                            
 						</div>
 							
 					</div>
@@ -167,72 +249,5 @@
 		</div>
             
 </div>
-	
 </section>
-
 </template>
-
-<script>
-import axios from 'axios';
-import '../../src/index.css'
-export default {
-    name: 'FindJob',
-    props: {
-        head: String
-    },
-    data(){
-        return{
-            jobs:[],
-            empType : [],
-            expLevel:[],
-            salaryRange:['Less than 40K Rs',
-                        '40K Rs - 60K Rs',
-                        '60K Rs - 100K Rs',
-                        '100K Rs - 500K Rs',
-                        '500K+ Rs',
-                        'Custom']
-        }
-    },
-    mounted() {
-    this.fetchJobs();
-    this.fetchEmplType();
-    this.fetchExpLevel();
-  },
-  computed: {
-  uniqueCategories() {
-    const allCategories = this.jobs.flatMap(job => job.categories);
-    const uniqueCategories = Array.from(new Set(allCategories.map(category => category.id)))
-      .map(categoryId => allCategories.find(category => category.id === categoryId));
-    return uniqueCategories.slice(0, 6);
-  }
-},
-    methods:{
-        async fetchJobs(){
-            try{
-                const response = await axios.get('http://51.20.72.242/api/v1/jobs/?')
-                this.jobs= response.data.data.results
-
-                console.log(this.jobs)
-            }catch(error){
-                console.error("There was an error fetching the jobs: ", error);
-            }
-        },
-        async fetchEmplType(){
-           try{
-            const response =  await axios.get("http://51.20.72.242/api/v1/jobs/employment-types/")
-            this.empType = response.data.data
-           } catch(error){
-            console.error("There was an error fetching the jobs: ", error);
-           }
-        },
-        async fetchExpLevel(){
-          try{
-           const response = await axios.get("http://51.20.72.242/api/v1/jobs/career-levels/");
-           this.expLevel= response.data.data
-          }catch(error){
-            console.error("There was an error fetching the jobs: ", error);
-          }
-        }
-    }
-}
-</script>
