@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from "vue-router"
-
+import JobDetails from "../components/JobDetails.vue"
 import FindJob from '../components/FindJob.vue'
 Vue.useAttrs(VueRouter);
 
