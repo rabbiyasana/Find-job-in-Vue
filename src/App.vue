@@ -1,6 +1,7 @@
 <template>
  <NavBar />
  <FindJob/>
+ <router-view></router-view>
 </template>
 
 <script>

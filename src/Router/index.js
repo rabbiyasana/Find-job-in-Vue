@@ -1,22 +1,23 @@
-import Vue from 'vue'
-import VueRouter from "vue-router"
-import JobDetails from "../components/JobDetails.vue"
-import FindJob from '../components/FindJob.vue'
-Vue.useAttrs(VueRouter);
+import { createRouter, createWebHistory } from 'vue-router';
+import FindJob from '../components/FindJob.vue';
+import JobDetails from '../components/JobDetails.vue';
 
-const routes= [
+const routes = [
     {
-        path:'/',
-        name:'findjob',
-        Component:FindJob
+        path: '/',
+        name: 'findjob',
+        component: FindJob 
     },
     {
-        path:'findjob/:id',
-        name:'jobdetails',
-        Component:JobDetails
+        path: '/job/:id',
+        name: 'jobdetails',
+        component: JobDetails 
     }
 ];
-const router = new VueRouter({
-    routes
-});
-export default router;
+
+const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+  });
+  
+  export default router;

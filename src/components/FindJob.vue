@@ -159,7 +159,7 @@
                                     <strong>{{job.organization_name}}</strong>
                                 </a>
                             </div>
-                            <div class="lg:w-2/12 sm:w-full mt-4 lg:mt-0s"><a class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2  my-4">Apply</a></div>
+                            <div class="lg:w-2/12 sm:w-full mt-4 lg:mt-0s"><router-link :to="'/job/' + job.id" class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2  my-4">Apply</router-link ></div>
 						</div>
 							
 					</div>
