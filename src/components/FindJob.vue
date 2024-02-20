@@ -9,8 +9,6 @@
                 <div class="lg:flex justify-between  items-center">
                     <!-- First Search Bar -->
                     <div class=" w-full lg:border-r border-Gray">
-                        <FontAwesomeIcon icon={faEnvelope} />
-                       
                         <input on:input={handlejobTitle} type="text" class="my-2 mx-2 lg:mx-0 focus:outline-none"
                             placeholder="jobtitle or keyword" />
 
@@ -173,19 +171,10 @@
 </section>
 
 </template>
-<!-- <style scoped>
-.text-left {
-  text-align: left;
-}
-</style> -->
+
 <script>
 import axios from 'axios';
 import '../../src/index.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faCoffee)
 export default {
     name: 'FindJob',
     props: {

@@ -1,16 +1,18 @@
 <template>
- 
- <FindJob head="hello"/>
+ <NavBar />
+ <FindJob/>
 </template>
 
 <script>
 
 import FindJob from './components/FindJob.vue';
+import NavBar from './components/NavBar.vue';
 import '../src/index.css'
 export default {
   name: 'App',
   components: {
-    FindJob
+    FindJob,
+    NavBar
   }
 }
 </script>
