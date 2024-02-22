@@ -1,27 +1,18 @@
-<script>
+<script setup>
 import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
 import '../../src/index.css';
-
-export default {
-  name: 'FindJob',
-  props: {
-    head: String,
-  },
-  setup() {
-    const jobs = ref([]);
-    const empType = ref([]);
-    const expLevel = ref([]);
-    const router = useRouter();
-    const salaryRange = ref([
-      'Less than 40K Rs',
-      '40K Rs - 60K Rs',
-      '60K Rs - 100K Rs',
-      '100K Rs - 500K Rs',
-      '500K+ Rs',
-      'Custom',
-    ]);
+const jobs = ref([]);
+const empType = ref([]);
+const expLevel = ref([]);
+const salaryRange = ref([
+  'Less than 40K Rs',
+  '40K Rs - 60K Rs',
+  '60K Rs - 100K Rs',
+  '100K Rs - 500K Rs',
+  '500K+ Rs',
+  'Custom',
+]);
 
     const fetchJobs = async () => {
       try {
@@ -50,14 +41,13 @@ export default {
       }
     };
 
-    const gotoJobDetails = (jobId) => {
-      router.push({ name: 'JobDetails', params: { id: jobId } });
-    };
+ 
 
     onMounted(() => {
       fetchJobs();
       fetchEmplType();
       fetchExpLevel();
+       
     });
 
     const uniqueCategories = computed(() => {
@@ -67,16 +57,7 @@ export default {
         .slice(0, 6);
     });
 
-    return {
-      jobs,
-      empType,
-      expLevel,
-      salaryRange,
-      gotoJobDetails,
-      uniqueCategories,
-    };
-  },
-};
+ 
 </script>
 
 <template>
@@ -240,7 +221,7 @@ export default {
                                 </a>
                             </div>
                             <div class="lg:w-2/12 sm:w-full mt-4 lg:mt-0s">
-                                <a :href="'/jobdetails/' + job.id" class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2 my-4">Apply</a>                             
+                                <router-link :to="'/jobdetails/' + job.id" class="rounded-full bg-blue-500 shadow-md text-white px-4 py-2 my-4">Apply</router-link>                             
                            </div>                            
 						</div>
 							
