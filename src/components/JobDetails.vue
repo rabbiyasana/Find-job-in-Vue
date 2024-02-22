@@ -10,6 +10,7 @@ import axios from 'axios';
         const jobName = ref(''); 
         const jobAddress = ref(''); 
         const jobCategory = ref(''); 
+        const categoryIcon = ref('')
         const experience = ref('')
         const experience_level = ref('');
 
@@ -29,18 +30,18 @@ import axios from 'axios';
             try {
             const response = await axios.get(`http://51.20.72.242/api/v1/jobs/${id}`);
             const jobDetails = response.data.data; 
-           
             const categoryNames = response.data.data.categories.map(category => category.name).join(', ');
-
+            const iconName = response.data.data.categories.map(category => category.icon.replace('fa fa-', ''))[0];
             jobTitle.value = jobDetails.title;
             jobDescription.value = jobDetails.description;
             jobName.value = jobDetails.name;
             jobAddress.value = jobDetails.address;
             jobCategory.value = categoryNames;
+            categoryIcon.value = iconName
 
             experience_level.value = jobDetails.experience_level;
             experience.value =jobDetails.experience
-            console.log(experience_level.value)
+        
             employment_type.value = jobDetails.employment_type;
             salary_min.value = jobDetails.salary_min;
             salary_max.value = jobDetails.salary_max;
@@ -82,7 +83,9 @@ import axios from 'axios';
               {{ jobTitle }}  
             </h1>
             <p class="my-2 text-sxm">by <strong>{{ jobName }}</strong> in {{jobAddress  }}</p>
-            <p class="my-2 text-sxm">{{ jobCategory }}</p>
+            <p class="my-2 text-sxm">
+                <font-awesome-icon :icon="['fas', categoryIcon]" />
+                {{ jobCategory }} </p>
             </div>
             <span class="mx-3">
                 <h1 class="text-lg  font-semibold">Overview</h1>
