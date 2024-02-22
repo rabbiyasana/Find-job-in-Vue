@@ -1,8 +1,17 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed,watchEffect } from 'vue';
 import axios from 'axios';
 import '../../src/index.css';
+
 const jobs = ref([]);
+
+const JobTitle = ref('');
+const Location = ref('');
+const categoryFilter = ref('');
+
+ 
+const filteredjobs = ref([]);
+
 const empType = ref([]);
 const expLevel = ref([]);
 const salaryRange = ref([
@@ -40,26 +49,36 @@ const salaryRange = ref([
         console.error("There was an error fetching the career levels: ", error);
       }
     };
+    const filterPosts = () => {
+  const title = JobTitle.value.toLowerCase();
+  const location = Location.value.toLowerCase();
+  const category = categoryFilter.value.toLowerCase();
 
- 
-
+  filteredjobs.value = jobs.value.filter(job =>
+    (job.title?.toLowerCase() || '').includes(title) &&
+    (job.location?.toLowerCase() || '').includes(location) &&
+    (job.category?.toLowerCase() || '').includes(category)
+  );
+};
+watchEffect(() => {
+  filterPosts(); 
+})
+const uniqueCategories = computed(() => {
+      const allCategories = jobs.value.flatMap(job => job.categories);
+      return Array.from(new Set(allCategories.map(category => category.id)))
+        .map(categoryId => allCategories.find(category => category.id === categoryId))
+        .slice(0, 6);
+    });
     onMounted(() => {
       fetchJobs();
       fetchEmplType();
       fetchExpLevel();
        
     });
+   
+   
 
-    const uniqueCategories = computed(() => {
-      const allCategories = jobs.value.flatMap(job => job.categories);
-      return Array.from(new Set(allCategories.map(category => category.id)))
-        .map(categoryId => allCategories.find(category => category.id === categoryId))
-        .slice(0, 6);
-    });
-
- 
 </script>
-
 <template>
    <div class="w-full bg-blue-100 p-5 flex justify-around items-stretch content-between">
 	<div class="container w-80vw ">
@@ -71,14 +90,15 @@ const salaryRange = ref([
                 <div class="lg:flex justify-between  items-center">
                     <!-- First Search Bar -->
                     <div class=" w-full lg:border-r border-Gray">
-                        <input on:input={handlejobTitle} type="text" class="my-2 mx-2 lg:mx-0 focus:outline-none"
+                        <input v-model="JobTitle" type="text" class="my-2 mx-2 lg:mx-0 focus:outline-none"
                             placeholder="jobtitle or keyword" />
 
                     </div>
+                   
                     <!-- Second Search Bar -->
                     <div class="w-full lg:border-r border-Gray ml-1">
                         <i class="fa fa-globe"></i>
-                        <input on:input={handlelocation} type="text" class="my-2 mx-2 lg:mx-0 focus:outline-none"
+                        <input v-model="Location" type="text" class="my-2 mx-2 lg:mx-0 focus:outline-none"
                             placeholder="Location " />
 
 
@@ -87,7 +107,7 @@ const salaryRange = ref([
                     <!-- Dropdown -->
                     <div class=" w-full ml-1">
                         <i class="fa fa-folder"></i>
-                        <select class="my-2 mx-2 lg:mx-0 focus:outline-none" @input="handleCategory">
+                        <select class="my-2 mx-2 lg:mx-0 focus:outline-none" v-model="categoryFilter">
                             <option>All Categories</option>
                             <template v-for="category in uniqueCategories" :key="category.id">
                                 <option :value="category.name">{{ category.name }}</option>
@@ -184,7 +204,7 @@ const salaryRange = ref([
 					</div>
 				</div>
 				
-					<div v-for="job in jobs" :key="job.id"  class="rounded-3xl py-5 my-4 px-3 border">
+					<div v-for="job in (JobTitle || Location || categoryFilter ? filteredjobs : jobs)" :key="job.id"  class="rounded-3xl py-5 my-4 px-3 border">
 						<div  class=" lg:flex py-4 items-equally justify-between">
 							<div class="lg:w-2/12 sm:w-full">
 								<a href="a">

@@ -77,7 +77,7 @@ import axios from 'axios';
     </div>
     <div class="lg:w-8/12 md:w-11/12 mx-auto flex justify-center mt-5">
         <div class="flex justify-center lg:w-9/12">
-         <div  class=" mx-5 lg:w-9/12">
+         <div  class="mx-5 mt-5 lg:w-9/12">
             <div>
                 <h1 class="text-3xl font-bold">
               {{ jobTitle }}  
@@ -122,8 +122,8 @@ import axios from 'axios';
         </div> 
     </div>
 
-    <div class="lg:w-8/12 md:w-11/12 mx-auto flex justify-center py-5 mt-5">
-        <div class="lg:w-9/12">
+    <div class="lg:w-8/12 md:w-11/12 mx-auto flex justify-center py-5 my-5">
+        <div class="lg:w-9/12 ">
            <span class="mx-3">
             <h1 class="text-lg  font-semibold">Responsabilities</h1>
                 <ul class="list-disc text-sm text-gray-500 ml-5 line-height-12">
