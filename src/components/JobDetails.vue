@@ -76,30 +76,33 @@ import axios from 'axios';
         <div class="lg:w-8/12 md:w-11/12 h-64 "><img src="@/assets/images/company_banner.png" alt="banner" class="h-full w-full rounded-lg" /></div>
     </div>
     <div class="lg:w-8/12 md:w-11/12 mx-auto flex justify-center mt-5">
-        <div class="flex justify-center lg:w-9/12">
-         <div  class="mx-5 mt-5 lg:w-9/12">
+        <div class="flex justify-center items-between  lg:w-9/12">
+         <div  class="mt-5 w-8/12 md:8/12 lg:w-19/12  xl:w-10/12">
             <div>
                 <h1 class="text-3xl font-bold">
               {{ jobTitle }}  
             </h1>
             <p class="my-2 text-sxm">by <strong>{{ jobName }}</strong> in {{jobAddress  }}</p>
-            <p class="my-2 text-sxm">
-                <font-awesome-icon :icon="['fas', categoryIcon]" />
-                {{ jobCategory }} </p>
+            <p  class="my-2 text-sxm">
+              <v-icon name="io-heart-circle-outline"></v-icon> {{ jobCategory }} </p>
             </div>
             <span class="mx-3">
                 <h1 class="text-lg  font-semibold">Overview</h1>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-800 leading-6">
                 As a Product Designer, you will work within a Product Delivery Team fused with UX, engineering, product and data talent. You will help the team design beautiful interfaces that solve business challenges for our clients. We work with a number of Tier 1 banks on building web-based applications for AML, KYC and Sanctions List management workflows. This role is ideal if you are looking to segue your career into the FinTech or Big Data arenas.
             </p>
           </span>
          </div>
-         <div  class="lg:w-3/12">
-            <div class="flex justify-end mt-3"><a href="#"  class="rounded-full bg-blue-500 shadow-md text-white px-4 py-3 my-4">Apply Now</a>                             </div>
+         <div  class="flex justify-between flex-row mt-5 sm:w-4/12 md:4/12 lg:w-2/12 ">
+         
+           <v-icon name="io-heart-circle-outline" class="mt-4"></v-icon>
+           <v-icon name="md-share-round" class="mt-4"></v-icon>
+          
+            <div class=" mt-3"><a href="#"  class="rounded-full bg-blue-500 shadow-md text-white px-4 py-3 my-4">Apply Now</a>                             </div>
          </div>
          
        
-     </div>
+         </div>
         <div class="lg:w-3/12 ">
             <div class="bg-blue-100 mt-4 mt-lg-0 rounded-2xl py-4 px-3 mx-3">
                 <span class="mx-2">
@@ -126,8 +129,8 @@ import axios from 'axios';
         <div class="lg:w-9/12 ">
            <span class="mx-3">
             <h1 class="text-lg  font-semibold">Responsabilities</h1>
-                <ul class="list-disc text-sm text-gray-500 ml-5 line-height-12">
-                        <li class="line-height-12">
+                <ul class="list-disc text-sm text-gray-800 ml-5 leading-8">
+                        <li>
                           Be involved in every step of the product design cycle
                           from discovery to developer handoff and user
                           acceptance testing.
@@ -174,7 +177,7 @@ import axios from 'axios';
             <span class="mx-3">
                 <h1 class="text-lg  font-semibold">Requirements</h1>
           
-                <ul class="list-disc text-sm text-gray-500 ml-5">
+                <ul class="list-disc text-sm text-gray-800 ml-5 leading-8">
                         <li>
                           4+ years of system administration experience with the
                           Microsoft Server platform (2012/2016, Microsoft IIS,
@@ -198,7 +201,7 @@ import axios from 'axios';
         
             </span>
             <span class="my-3"><h1 class="text-lg  font-semibold">Skills</h1>
-                <ul class="list-disc text-sm text-gray-500 ml-5">
+                <ul class="list-disc text-sm text-gray-800 ml-5 leading-8">
                         <li>
                           Programming experience developing web applications
                           with the Microsoft .NET stack and a basic knowledge of
@@ -225,7 +228,7 @@ import axios from 'axios';
                       </ul>
                     </span>
                     <div  class="lg:w-3/12">
-            <div class="mt-5"><a href="#"  class="rounded-full bg-blue-500 shadow-md text-white px-4 py-3 my-4">Apply Now</a>                             </div>
+            <div class="mt-5"><a href="#"  class="rounded-full bg-blue-500 shadow-md text-white px-5 py-3 my-4">Apply Now</a>                             </div>
          </div>
         </div>
         <div class="lg:w-3/12 ">

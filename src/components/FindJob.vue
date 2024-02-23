@@ -49,17 +49,18 @@ const salaryRange = ref([
         console.error("There was an error fetching the career levels: ", error);
       }
     };
-    const filterPosts = () => {
-  const title = JobTitle.value.toLowerCase();
-  const location = Location.value.toLowerCase();
-  const category = categoryFilter.value.toLowerCase();
+  const filterPosts = () => {
+  const title = JobTitle.value.toLowerCase().trim();
+  const location = Location.value.toLowerCase().trim();
+  const category = categoryFilter.value.toLowerCase().trim();
 
   filteredjobs.value = jobs.value.filter(job =>
-    (job.title?.toLowerCase() || '').includes(title) &&
-    (job.location?.toLowerCase() || '').includes(location) &&
-    (job.category?.toLowerCase() || '').includes(category)
+    (job.title?.toLowerCase().trim() || '').includes(title) &&
+    (job.organization_address?.toLowerCase().trim() || '').includes(location) &&
+    job.categories?.some(cat => cat.name.toLowerCase().trim().includes(category))
   );
 };
+
 watchEffect(() => {
   filterPosts(); 
 })
@@ -108,7 +109,7 @@ const uniqueCategories = computed(() => {
                     <div class=" w-full ml-1">
                         <i class="fa fa-folder"></i>
                         <select class="my-2 mx-2 lg:mx-0 focus:outline-none" v-model="categoryFilter">
-                            <option>All Categories</option>
+                            <option value="">All Categories</option>
                             <template v-for="category in uniqueCategories" :key="category.id">
                                 <option :value="category.name">{{ category.name }}</option>
                             </template>
@@ -190,7 +191,7 @@ const uniqueCategories = computed(() => {
 					<div class="flex flex-wrap justify-between ">
 						<div class="col-auto">
 							<h2 class="text-2xl " >
-								<span class="text-gray-500">Showing</span> 
+								<span class="text-gray-500">Showing Total</span> 
 								<span class="text-bold ml-1 mr-1">{{jobs.length}}</span>
 								<span class="text-gray-500">jobs</span> </h2>
 						</div>
